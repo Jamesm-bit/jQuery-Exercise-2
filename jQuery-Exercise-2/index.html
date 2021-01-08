@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furth Pattern</title>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <form>
+        <input type="text" id="fname" placeholder="First Name">
+        <input type="text" id="lname" placeholder="Last Name">
+        <input type="text" id="selectedColor" placeholder="#background color">
+        <select id="textSize" placeholder="Text Size">
+            <option value="Large">Large</option>
+            <option value="Medium">Medium</option>
+            <option value="Small">Small</option>
+        </select>
+        <button type="submit" class="topButton" id="Add"><i class="fas fa-plus-circle"></i> Add</button>
+        <button type="button" class="topButton" id="confirmEdit">Update</button>
+        <button type="button" class="topButton" id="render">Render</button>
+    </form>
+    <div>
+        <input type="checkbox" id="checkbx">Select All
+        <p id="totalselec">Total 0 Selected Rows</p>
+        <button type="button" id="checkdel">Delete</button>
+    </div>
+    <list id="list">
+
+    </list>
+    <form>
+        <input type="text" id="selectedColorModify" placeholder="#background color">
+        <select id="textSizeModify" placeholder="Text Size">
+            <option value="Large">Large</option>
+            <option value="Medium">Medium</option>
+            <option value="Small">Small</option>
+        </select>
+        <button type="button" id="modifySelected">Apply</button>
+    </form>
+    <script src="dynamictable.js"></script>
+</body>
+
+</html>
