@@ -19,6 +19,9 @@ function uncheck(i) {
         }
     }
     showcurrselec()
+    $('#selectedColorModify').css('visibility', 'visible')
+    $('#textSizeModify').css('visibility', 'visible')
+    $('#modifySelected').css('visibility', 'visible')
 }
 
 function checkall() {
@@ -37,7 +40,7 @@ function checkall() {
         }
         x = 0
     }
-    document.getElementById("totalselec").innerHTML = showcurrselec()
+    showcurrselec()
 
 }
 
@@ -112,6 +115,20 @@ function addelement(f, l) {
     divlist.appendChild(editbutton)
     divlist.appendChild(delbutton)
     divlist2.appendChild(divlist)
+    fNameTag.style.backgroundColor = $('#selectedColor').val().toString()
+    lNameTag.style.backgroundColor = $('#selectedColor').val().toString()
+
+    if ($('#textSizeModify option:selected').text() == 'Large') {
+        fNameTag.style.fontSize = 'Large'
+        lNameTag.style.fontSize = 'Large'
+    } else if ($('#textSizeModify option:selected').text() == 'Medium') {
+        fNameTag.style.fontSize = 'Medium'
+        lNameTag.style.fontSize = 'Medium'
+    } else if ($('#textSizeModify option:selected').text() == 'Small') {
+        fNameTag.style.fontSize = 'Small'
+        lNameTag.style.fontSize = 'Large'
+    }
+    
     $(divlist2).hide().appendTo('#list').fadeIn(1000)
 
     document.getElementById("cB" + i).addEventListener("click", uncheck.bind(null, i))
@@ -179,6 +196,10 @@ function del(z) {
 function add() {
     fname = document.getElementById("fname").value
     lname = document.getElementById("lname").value
+    if(fname.length == 0 || lname.length == 0) {
+        alert('Pleaser enter a first or last name')
+        return;
+    }
     addelement(fname, lname)
 }
 
@@ -200,9 +221,6 @@ function removechecked() {
         let box = boxes[x]
         if (box.checked) {
             $('#list').children().eq(x).fadeOut(1000, function () { $('#list').children().eq(x).remove() })
-            /*
-            div.parentNode.removeChild(div)
-            */
         }
     }
     for (x = 0; x < boxes.length; x++) {
@@ -216,36 +234,28 @@ function removechecked() {
 function changeSelected() {
 
     $('input:checkbox').each(function () {
-        if($(this).is(':checked')){
+        if ($(this).is(':checked')) {
             $(this).siblings('div').children('p').css('background-color', $('#selectedColorModify').val())
-            if($('#textSizeModify option:selected').text() == 'Large') {
+            if ($('#textSizeModify option:selected').text() == 'Large') {
                 console.log('Large')
-                $(this).siblings('div').children('p').css('font-size','large')
+                $(this).siblings('div').children('p').css('font-size', 'large')
             } else if ($('#textSizeModify option:selected').text() == 'Medium') {
                 console.log('Medium')
-                $(this).siblings('div').children('p').css('font-size','medium')
+                $(this).siblings('div').children('p').css('font-size', 'medium')
             } else if ($('#textSizeModify option:selected').text() == 'Small') {
                 console.log('Small')
-                $(this).siblings('div').children('p').css('font-size','small')
+                $(this).siblings('div').children('p').css('font-size', 'small')
+            }
+        }
+        $('#selectedColorModify').css('visibility', 'hidden')
+        $('#textSizeModify').css('visibility', 'hidden')
+        $('#modifySelected').css('visibility', 'hidden')
+        if (document.getElementById("cB" + i)) {
+            if (document.getElementById("checkbx").checked) {
+                document.getElementById("checkbx").checked = false
             }
         }
     })
-
-    /*
-    boxes = document.getElementsByClassName("chk")
-    for (let x = 0; x < boxes.length; x++) {
-        let box = boxes[x]
-        if (box.checked) {
-            console.log($('#selectedColorModify').val())
-                $('#innamef').css('background-color', $('#selectedColorModify').val())
-            
-
-            
-            div.parentNode.removeChild(div)
-            
-        }
-    }
-    */
 }
 
 document.getElementById('modifySelected').addEventListener('click', changeSelected.bind(null))

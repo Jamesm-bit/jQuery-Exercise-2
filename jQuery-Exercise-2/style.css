@@ -47,3 +47,12 @@ p {
 .chk {
   visibility: visible;
 }
+#selectedColorModify {
+  visibility: hidden;
+}
+#textSizeModify {
+  visibility: hidden;
+}
+#modifySelected {
+  visibility: hidden;
+}
