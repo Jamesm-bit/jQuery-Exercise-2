@@ -198,7 +198,6 @@ function add() {
     lname = document.getElementById("lname").value
     console.log(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))
     if(fname.length == 0 || lname.length == 0 || document.getElementById("selectedColor").value.length == 0 ) {
-        alert('Please fill out all feilds')
         return;
     }
     if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))) {
@@ -230,8 +229,9 @@ function removechecked() {
             $('#'+curr.id).parent().fadeOut(1000, function() {$('#'+curr.id).parent().remove()})
             
         }
+        showcurrselec()
     }
-    showcurrselec()
+    
 }
 
 function changeSelected() {

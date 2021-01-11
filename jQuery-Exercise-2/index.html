@@ -11,16 +11,16 @@
 </head>
 
 <body>
-    <form>
-        <input type="text" id="fname" placeholder="First Name">
-        <input type="text" id="lname" placeholder="Last Name">
-        <input type="text" id="selectedColor" placeholder="#background color">
+    <form onsubmit="return false">
+        <input type="text" id="fname" placeholder="First Name" required>
+        <input type="text" id="lname" placeholder="Last Name" required>
+        <input type="text" id="selectedColor" placeholder="#background color" required>
         <select id="textSize" placeholder="Text Size">
             <option value="Large">Large</option>
             <option value="Medium">Medium</option>
             <option value="Small">Small</option>
         </select>
-        <button type="button" class="topButton" id="Add"><i class="fas fa-plus-circle"></i> Add</button>
+        <button type="submit" class="topButton" id="Add"><i class="fas fa-plus-circle"></i> Add</button>
         <button type="button" class="topButton" id="confirmEdit">Update</button>
         <button type="button" class="topButton" id="render">Render</button>
     </form>
