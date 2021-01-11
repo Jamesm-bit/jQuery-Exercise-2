@@ -54,7 +54,7 @@ function showcurrselec() {
     document.getElementById("totalselec").innerHTML = `Total ${yt} Rows`
 }
 
-function addelement(f, l) {
+function addelement(f, l, c, s) {
     i++
 
     let fnames = document.getElementsByClassName("innamef")
@@ -115,18 +115,18 @@ function addelement(f, l) {
     divlist.appendChild(editbutton)
     divlist.appendChild(delbutton)
     divlist2.appendChild(divlist)
-    fNameTag.style.backgroundColor = $('#selectedColor').val().toString()
-    lNameTag.style.backgroundColor = $('#selectedColor').val().toString()
+    fNameTag.style.backgroundColor = c
+    lNameTag.style.backgroundColor = c
 
-    if ($('#textSizeModify option:selected').text() == 'Large') {
+    if (s == 'Large') {
         fNameTag.style.fontSize = 'Large'
         lNameTag.style.fontSize = 'Large'
-    } else if ($('#textSizeModify option:selected').text() == 'Medium') {
+    } else if (s == 'Medium') {
         fNameTag.style.fontSize = 'Medium'
         lNameTag.style.fontSize = 'Medium'
-    } else if ($('#textSizeModify option:selected').text() == 'Small') {
+    } else if (s == 'Small') {
         fNameTag.style.fontSize = 'Small'
-        lNameTag.style.fontSize = 'Large'
+        lNameTag.style.fontSize = 'Small'
     }
     
     $(divlist2).hide().appendTo('#list').fadeIn(1000)
@@ -196,16 +196,23 @@ function del(z) {
 function add() {
     fname = document.getElementById("fname").value
     lname = document.getElementById("lname").value
-    if(fname.length == 0 || lname.length == 0) {
-        alert('Pleaser enter a first or last name')
+    console.log(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))
+    if(fname.length == 0 || lname.length == 0 || document.getElementById("selectedColor").value.length == 0 ) {
+        alert('Please fill out all feilds')
         return;
     }
-    addelement(fname, lname)
+    if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))) {
+        alert('please enter a valid Hex color')
+        return
+    }
+    addelement(fname, lname, $('#selectedColor').val().toString(),$('#textSize option:selected').text())
 }
 
 function render() {
+    let ucolors = ['#ff0000','#3366ff','#66ff33','#ff0066','#cc3300','#3366ff','#cc3399','#00ff99','#99cc00','#33cccc']
+    let usize = ['Large','Small','Medium','Large','Medium','Small','Medium','Large','Small','Medium']
     for (let u = 0; u < 10; u++) {
-        addelement("test", "test" + u)
+        addelement("test", "test" + u,ucolors[u],usize[u])
     }
 
     if (document.getElementById("checkbx").checked == true) {
@@ -217,23 +224,23 @@ function removechecked() {
     boxes = document.getElementsByClassName("chk")
     divs = document.getElementsByClassName("div")
     document.getElementById("checkbx").checked = false
-    for (let x = 0; x < boxes.length; x++) {
-        let box = boxes[x]
-        if (box.checked) {
-            $('#list').children().eq(x).fadeOut(1000, function () { $('#list').children().eq(x).remove() })
+    
+    for(let curr of boxes) {
+        if(curr.checked){
+            $('#'+curr.id).parent().fadeOut(1000, function() {$('#'+curr.id).parent().remove()})
+            
         }
     }
-    for (x = 0; x < boxes.length; x++) {
-        let box = boxes[x]
-        if (box.checked) {
-            $('#list').children().eq(x).fadeOut(1000, function () { $('#list').children().eq(x).remove() })
-        }
-    }
+    showcurrselec()
 }
 
 function changeSelected() {
-
+    if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))) {
+        alert('please enter a valid Hex color')
+        return
+    }
     $('input:checkbox').each(function () {
+        
         if ($(this).is(':checked')) {
             $(this).siblings('div').children('p').css('background-color', $('#selectedColorModify').val())
             if ($('#textSizeModify option:selected').text() == 'Large') {
