@@ -153,6 +153,8 @@ function editFinish() {
     document.getElementById("lname").value = ""
     document.getElementById("checkdel").style.visibility = "visible"
     document.getElementById("checkbx").style.visibility = "visible"
+    $('#selectedColor').css('visibility','visible')
+    $('#textSize').css('visibility','visible')
     boxes = document.getElementsByClassName("chk")
     for (let x = 0; x < boxes.length; x++) {
         let boxinv = boxes[x]
@@ -183,6 +185,8 @@ function editpush(j) {
     document.getElementById("checkbx").style.visibility = "hidden"
     document.getElementById("edit" + v).style.visibility = "hidden"
     document.getElementById("del" + v).style.visibility = "hidden"
+    $('#selectedColor').css('visibility','hidden')
+    $('#textSize').css('visibility','hidden')
     document.getElementById("confirmEdit").style.visibility = "visible"
     document.getElementById("Add").style.visibility = "hidden"
     document.getElementById("cB" + v).style.visibility = "hidden"
@@ -204,7 +208,13 @@ function add() {
         alert('please enter a valid Hex color')
         return
     }
+    
+    
     addelement(fname, lname, $('#selectedColor').val().toString(),$('#textSize option:selected').text())
+    document.getElementById('selectedColor').value = ''
+    if (document.getElementById("checkbx").checked == true) {
+        checkall()
+    }
 }
 
 function render() {
@@ -219,7 +229,7 @@ function render() {
     }
 }
 
-function removechecked() {
+async function removechecked() {
     boxes = document.getElementsByClassName("chk")
     divs = document.getElementsByClassName("div")
     document.getElementById("checkbx").checked = false
@@ -229,13 +239,15 @@ function removechecked() {
             $('#'+curr.id).parent().fadeOut(1000, function() {$('#'+curr.id).parent().remove()})
             
         }
-        showcurrselec()
+        
     }
-    
+    setTimeout(() => {
+        showcurrselec()
+    }, 1020);
 }
 
 function changeSelected() {
-    if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))) {
+    if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColorModify').val().toString()))) {
         alert('please enter a valid Hex color')
         return
     }
@@ -262,7 +274,16 @@ function changeSelected() {
                 document.getElementById("checkbx").checked = false
             }
         }
+        document.getElementById("cB" + i).checked = false
     })
+    boxes = document.getElementsByClassName("chk")
+    for(let curr of boxes) {
+        if(curr.checked){
+            curr.checked = false
+            
+        }
+        
+    }
 }
 
 document.getElementById('modifySelected').addEventListener('click', changeSelected.bind(null))
