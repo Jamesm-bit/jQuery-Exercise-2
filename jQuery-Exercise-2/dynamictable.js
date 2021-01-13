@@ -51,22 +51,21 @@ function showcurrselec() {
             yt++
         }
     }
-    document.getElementById("totalselec").innerHTML = `Total ${yt} Rows`
+    $("#totalselec").html(`Total ${yt} Rows`)
 }
 
 function addelement(f, l, c, s) {
     i++
 
-    let fnames = document.getElementsByClassName("innamef")
-    let lnames = document.getElementsByClassName("innamel")
+    let fnames = $(".innamef")
+    let lnames = $(".innamel")
 
     if (fnames.length > 0) {
         for (let z = 0; z < fnames.length; z++) {
             if (f == fnames[z].innerHTML) {
-                for (let y = 0; y < fnames.length; y++) {
-                    if (l == lnames[y].innerHTML) {
-                        return
-                    }
+                if (l == lnames[z].innerHTML) {
+                    alert('That username and password combination has already been taken')
+                    return;
                 }
             }
         }
@@ -128,7 +127,7 @@ function addelement(f, l, c, s) {
         fNameTag.style.fontSize = 'Small'
         lNameTag.style.fontSize = 'Small'
     }
-    
+
     $(divlist2).hide().appendTo('#list').fadeIn(1000)
 
     document.getElementById("cB" + i).addEventListener("click", uncheck.bind(null, i))
@@ -137,24 +136,19 @@ function addelement(f, l, c, s) {
 }
 
 function editFinish() {
-    let fNameChange = document.getElementById("fname").value
-    let lNameChange = document.getElementById("lname").value
+    $("#fName" + v).html($("#fname").val())
+    $("#lName" + v).html($("#lname").val())
 
-    let previousFName = document.getElementById("fName" + v)
-    previousFName.innerHTML = fNameChange
-
-    let previousLName = document.getElementById("lName" + v)
-    previousLName.innerHTML = lNameChange
-    document.getElementById("edit" + v).style.visibility = "visible"
-    document.getElementById("del" + v).style.visibility = "visible"
-    document.getElementById("confirmEdit").style.visibility = "hidden"
-    document.getElementById("Add").style.visibility = "visible"
-    document.getElementById("fname").value = ""
-    document.getElementById("lname").value = ""
-    document.getElementById("checkdel").style.visibility = "visible"
-    document.getElementById("checkbx").style.visibility = "visible"
-    $('#selectedColor').css('visibility','visible')
-    $('#textSize').css('visibility','visible')
+    $("#edit" + v).css("visibility", "visible")
+    $("#del" + v).css("visibility", "visible")
+    $("#confirmEdit").css("visibility", "hidden")
+    $("#Add").css("visibility", "visible")
+    $("#fname").val('')
+    $("#lname").val('')
+    $("#checkdel").css("visibility", "visible")
+    $("#checkbx").css("visibility", "visible")
+    $('#selectedColor').css('visibility', 'visible')
+    $('#textSize').css('visibility', 'visible')
     boxes = document.getElementsByClassName("chk")
     for (let x = 0; x < boxes.length; x++) {
         let boxinv = boxes[x]
@@ -164,11 +158,10 @@ function editFinish() {
 
 function editpush(j) {
 
-    let fNameChange = document.getElementById("fName" + j).innerHTML
     let lNameChange = document.getElementById("lName" + j).innerHTML
 
-    document.getElementById("fname").value = fNameChange
-    document.getElementById("lname").value = lNameChange
+    $("#fname").val($("#fName" + j).html())
+    $("#lname").val($("#lName" + j).html())
 
     let fbuttons = document.getElementsByClassName("fNameButton")
     let lbuttons = document.getElementsByClassName("lNameButton")
@@ -181,47 +174,45 @@ function editpush(j) {
     }
 
     v = j
-    document.getElementById("checkdel").style.visibility = "hidden"
-    document.getElementById("checkbx").style.visibility = "hidden"
-    document.getElementById("edit" + v).style.visibility = "hidden"
-    document.getElementById("del" + v).style.visibility = "hidden"
-    $('#selectedColor').css('visibility','hidden')
-    $('#textSize').css('visibility','hidden')
-    document.getElementById("confirmEdit").style.visibility = "visible"
-    document.getElementById("Add").style.visibility = "hidden"
-    document.getElementById("cB" + v).style.visibility = "hidden"
+    $("#checkdel").css('visibility', 'hidden')
+    $("#checkbx").css('visibility', 'hidden')
+    $("#edit" + v).css('visibility', 'hidden')
+    $("#del" + v).css('visibility', 'hidden')
+    $('#selectedColor').css('visibility', 'hidden')
+    $('#textSize').css('visibility', 'hidden')
+    $("#confirmEdit").css("visibility", "visible")
+    $("#Add").css('visibility', 'hidden')
+    $("#cB" + v).css('visibility', 'hidden')
 
 }
 
 function del(z) {
-    $("#div21" + z).fadeOut(1000, function () { $("#div21" + z).remove() })
+    $("#div21" + z).fadeOut(1000, function () { $("#div21" + z).remove(); showcurrselec() })
+
+
+
 }
 
 function add() {
-    fname = document.getElementById("fname").value
-    lname = document.getElementById("lname").value
-    console.log(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))
-    if(fname.length == 0 || lname.length == 0 || document.getElementById("selectedColor").value.length == 0 ) {
+    if (fname.length == 0 || lname.length == 0 || document.getElementById("selectedColor").value.length == 0) {
         return;
     }
-    if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))) {
+    if (!(/^#[0-9A-F]{6}$/i.test($('#selectedColor').val().toString()))) {
         alert('please enter a valid Hex color')
-        return
+        return;
     }
-    
-    
-    addelement(fname, lname, $('#selectedColor').val().toString(),$('#textSize option:selected').text())
-    document.getElementById('selectedColor').value = ''
+    addelement($("#fname").val(), $("#lname").val(), $('#selectedColor').val().toString(), $('#textSize option:selected').text())
+    $('#selectedColor').val('')
     if (document.getElementById("checkbx").checked == true) {
         checkall()
     }
 }
 
 function render() {
-    let ucolors = ['#ff0000','#3366ff','#66ff33','#ff0066','#cc3300','#3366ff','#cc3399','#00ff99','#99cc00','#33cccc']
-    let usize = ['Large','Small','Medium','Large','Medium','Small','Medium','Large','Small','Medium']
+    let ucolors = ['#ff0000', '#3366ff', '#66ff33', '#ff0066', '#cc3300', '#3366ff', '#cc3399', '#00ff99', '#99cc00', '#33cccc']
+    let usize = ['Large', 'Small', 'Medium', 'Large', 'Medium', 'Small', 'Medium', 'Large', 'Small', 'Medium']
     for (let u = 0; u < 10; u++) {
-        addelement("test", "test" + u,ucolors[u],usize[u])
+        addelement("test", "test" + u, ucolors[u], usize[u])
     }
 
     if (document.getElementById("checkbx").checked == true) {
@@ -233,36 +224,28 @@ async function removechecked() {
     boxes = document.getElementsByClassName("chk")
     divs = document.getElementsByClassName("div")
     document.getElementById("checkbx").checked = false
-    
-    for(let curr of boxes) {
-        if(curr.checked){
-            $('#'+curr.id).parent().fadeOut(1000, function() {$('#'+curr.id).parent().remove()})
-            
+
+    for (let curr of boxes) {
+        if (curr.checked) {
+            $('#' + curr.id).parent().fadeOut(1000, function () { $('#' + curr.id).parent().remove(); showcurrselec() })
+
         }
-        
     }
-    setTimeout(() => {
-        showcurrselec()
-    }, 1020);
 }
 
 function changeSelected() {
-    if(!(/^#[0-9A-F]{6}$/i.test($('#selectedColorModify').val().toString()))) {
+    if (!(/^#[0-9A-F]{6}$/i.test($('#selectedColorModify').val().toString()))) {
         alert('please enter a valid Hex color')
         return
     }
     $('input:checkbox').each(function () {
-        
         if ($(this).is(':checked')) {
             $(this).siblings('div').children('p').css('background-color', $('#selectedColorModify').val())
             if ($('#textSizeModify option:selected').text() == 'Large') {
-                console.log('Large')
                 $(this).siblings('div').children('p').css('font-size', 'large')
             } else if ($('#textSizeModify option:selected').text() == 'Medium') {
-                console.log('Medium')
                 $(this).siblings('div').children('p').css('font-size', 'medium')
             } else if ($('#textSizeModify option:selected').text() == 'Small') {
-                console.log('Small')
                 $(this).siblings('div').children('p').css('font-size', 'small')
             }
         }
@@ -277,13 +260,14 @@ function changeSelected() {
         document.getElementById("cB" + i).checked = false
     })
     boxes = document.getElementsByClassName("chk")
-    for(let curr of boxes) {
-        if(curr.checked){
+    for (let curr of boxes) {
+        if (curr.checked) {
             curr.checked = false
-            
+
         }
-        
+
     }
+    document.getElementById('selectedColorModify').value = ''
 }
 
 document.getElementById('modifySelected').addEventListener('click', changeSelected.bind(null))
