@@ -1,22 +1,21 @@
 
-let i = 0
-let v = 0
-let divlist = null
-let fNameTag = null
-let lNameTag = null
-let listele = null
-let editbutton = null
-let delbutton = null
-let checkBox = null
-let boxes = null
-let divs = null
-let boxes2 = document.getElementsByClassName("chk")
+let i = 0;
+let v = 0;
+let divlist = null;
+let fNameTag = null;
+let lNameTag = null;
+let listele = null;
+let editbutton = null;
+let delbutton = null;
+let checkBox = null;
+let boxes = null;
+let divs = null;
+let checkBoxes = document.getElementsByClassName("chk");
 
 function uncheck(i) {
-    if (document.getElementById("cB" + i)) {
-        if (document.getElementById("checkbx").checked) {
-            document.getElementById("checkbx").checked = false
-        }
+
+    if ($("#cB" + i) && $("#checkbx").is(':checked')) {
+        $("#checkbx").is(':checked') = false
     }
     showcurrselec()
     $('#selectedColorModify').css('visibility', 'visible')
@@ -25,20 +24,16 @@ function uncheck(i) {
 }
 
 function checkall() {
-    if (checkbx.checked) {
-        let boxes = document.getElementsByClassName("chk")
-        for (let x = 0; x < boxes.length; x++) {
-            let box = boxes[x]
-            box.checked = true
+    checkBoxes = document.getElementsByClassName("chk")
+    if ($('#checkbx').is(':checked')) {
+        for (let item in checkBoxes) {
+            checkBoxes[item].checked = true
         }
-        x = 0
+
     } else {
-        let boxes = document.getElementsByClassName("chk")
-        for (let x = 0; x < boxes.length; x++) {
-            let box = boxes[x]
-            box.checked = false
+        for (let item in checkBoxes) {
+            checkBoxes[item].checked = false
         }
-        x = 0
     }
     showcurrselec()
 
@@ -46,8 +41,8 @@ function checkall() {
 
 function showcurrselec() {
     let yt = 0
-    for (p = 0; p < boxes2.length; p++) {
-        if (boxes2[p].checked == true) {
+    for (let item in checkBoxes) {
+        if (checkBoxes[item].checked == true) {
             yt++
         }
     }
@@ -117,17 +112,9 @@ function addelement(f, l, c, s) {
     fNameTag.style.backgroundColor = c
     lNameTag.style.backgroundColor = c
 
-    if (s == 'Large') {
-        fNameTag.style.fontSize = 'Large'
-        lNameTag.style.fontSize = 'Large'
-    } else if (s == 'Medium') {
-        fNameTag.style.fontSize = 'Medium'
-        lNameTag.style.fontSize = 'Medium'
-    } else if (s == 'Small') {
-        fNameTag.style.fontSize = 'Small'
-        lNameTag.style.fontSize = 'Small'
-    }
-
+    fNameTag.style.fontSize = s
+    lNameTag.style.fontSize = s
+    
     $(divlist2).hide().appendTo('#list').fadeIn(1000)
 
     document.getElementById("cB" + i).addEventListener("click", uncheck.bind(null, i))
@@ -138,7 +125,6 @@ function addelement(f, l, c, s) {
 function editFinish() {
     $("#fName" + v).html($("#fname").val())
     $("#lName" + v).html($("#lname").val())
-
     $("#edit" + v).css("visibility", "visible")
     $("#del" + v).css("visibility", "visible")
     $("#confirmEdit").css("visibility", "hidden")
@@ -150,30 +136,28 @@ function editFinish() {
     $('#selectedColor').css('visibility', 'visible')
     $('#textSize').css('visibility', 'visible')
     boxes = document.getElementsByClassName("chk")
-    for (let x = 0; x < boxes.length; x++) {
-        let boxinv = boxes[x]
-        boxinv.style.visibility = "visible"
+    for (let item in boxes) {
+        if (item < 10) {
+            boxes[item].style.visibility = "visible"
+        }
     }
 }
 
 function editpush(j) {
-
-    let lNameChange = document.getElementById("lName" + j).innerHTML
-
-    $("#fname").val($("#fName" + j).html())
-    $("#lname").val($("#lName" + j).html())
-
-    let fbuttons = document.getElementsByClassName("fNameButton")
-    let lbuttons = document.getElementsByClassName("lNameButton")
+    v = j
+    $("#fname").val($("#fName" + v).html())
+    $("#lname").val($("#lName" + v).html())
+    let fbuttons = $(".fNameButton")
+    let lbuttons = $(".lNameButton")
 
     for (item in fbuttons) {
         if (item != "length" && item != "item" && item != "namedItem") {
-            fbuttons[item].style.visibility = "visible"
-            lbuttons[item].style.visibility = "visible"
+            if (item < 10) {
+                fbuttons[item].style.visibility = "visible"
+                lbuttons[item].style.visibility = "visible"
+            }
         }
     }
-
-    v = j
     $("#checkdel").css('visibility', 'hidden')
     $("#checkbx").css('visibility', 'hidden')
     $("#edit" + v).css('visibility', 'hidden')
@@ -203,7 +187,7 @@ function add() {
     }
     addelement($("#fname").val(), $("#lname").val(), $('#selectedColor').val().toString(), $('#textSize option:selected').text())
     $('#selectedColor').val('')
-    if (document.getElementById("checkbx").checked == true) {
+    if ($("#checkbx").is(':checked')) {
         checkall()
     }
 }
@@ -211,18 +195,17 @@ function add() {
 function render() {
     let ucolors = ['#ff0000', '#3366ff', '#66ff33', '#ff0066', '#cc3300', '#3366ff', '#cc3399', '#00ff99', '#99cc00', '#33cccc']
     let usize = ['Large', 'Small', 'Medium', 'Large', 'Medium', 'Small', 'Medium', 'Large', 'Small', 'Medium']
-    for (let u = 0; u < 10; u++) {
-        addelement("test", "test" + u, ucolors[u], usize[u])
+    for (item in ucolors) {
+        addelement("test", "test" + item, ucolors[item], usize[item])
     }
 
-    if (document.getElementById("checkbx").checked == true) {
+    if ($("#checkbx").is(':checked')) {
         checkall()
     }
 }
 
 async function removechecked() {
     boxes = document.getElementsByClassName("chk")
-    divs = document.getElementsByClassName("div")
     document.getElementById("checkbx").checked = false
 
     for (let curr of boxes) {
@@ -241,25 +224,13 @@ function changeSelected() {
     $('input:checkbox').each(function () {
         if ($(this).is(':checked')) {
             $(this).siblings('div').children('p').css('background-color', $('#selectedColorModify').val())
-            if ($('#textSizeModify option:selected').text() == 'Large') {
-                $(this).siblings('div').children('p').css('font-size', 'large')
-            } else if ($('#textSizeModify option:selected').text() == 'Medium') {
-                $(this).siblings('div').children('p').css('font-size', 'medium')
-            } else if ($('#textSizeModify option:selected').text() == 'Small') {
-                $(this).siblings('div').children('p').css('font-size', 'small')
-            }
+            $(this).siblings('div').children('p').css('font-size', $('#textSizeModify option:selected').text())
         }
         $('#selectedColorModify').css('visibility', 'hidden')
         $('#textSizeModify').css('visibility', 'hidden')
         $('#modifySelected').css('visibility', 'hidden')
-        if (document.getElementById("cB" + i)) {
-            if (document.getElementById("checkbx").checked) {
-                document.getElementById("checkbx").checked = false
-            }
-        }
-        document.getElementById("cB" + i).checked = false
     })
-    boxes = document.getElementsByClassName("chk")
+    boxes = $(".chk")
     for (let curr of boxes) {
         if (curr.checked) {
             curr.checked = false
@@ -267,7 +238,7 @@ function changeSelected() {
         }
 
     }
-    document.getElementById('selectedColorModify').value = ''
+    $('#selectedColorModify').val('')
 }
 
 document.getElementById('modifySelected').addEventListener('click', changeSelected.bind(null))
