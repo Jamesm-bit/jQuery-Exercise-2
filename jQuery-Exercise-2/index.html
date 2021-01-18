@@ -20,14 +20,14 @@
             <option value="Medium">Medium</option>
             <option value="Small">Small</option>
         </select>
-        <button type="submit" class="topButton" id="Add"><i class="fas fa-plus-circle"></i> Add</button>
-        <button type="button" class="topButton" id="confirmEdit">Update</button>
-        <button type="button" class="topButton" id="render">Render</button>
+        <button type="submit" class="topButton" id="Add" onclick="add()"><i class="fas fa-plus-circle"></i> Add</button>
+        <button type="button" class="topButton" id="confirmEdit" onclick="editFinish()">Update</button>
+        <button type="button" class="topButton" id="render" onclick="renderTestData()">Render</button>
     </form>
     <div>
-        <input type="checkbox" id="checkbx">Select All
+        <input type="checkbox" id="checkbx" onclick="checkAll()">Select All
         <p id="totalselec">Total 0 Selected Rows</p>
-        <button type="button" id="checkdel">Delete</button>
+        <button type="button" id="checkdel" onclick="removeChecked()">Delete</button>
     </div>
     <list id="list">
 
@@ -39,7 +39,7 @@
             <option value="Medium">Medium</option>
             <option value="Small">Small</option>
         </select>
-        <button type="button" id="modifySelected">Apply</button>
+        <button type="button" id="modifySelected" onclick="changeSelected()">Apply</button>
     </form>
     <script src="dynamictable.js"></script>
 </body>
