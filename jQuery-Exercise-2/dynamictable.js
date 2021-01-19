@@ -11,7 +11,7 @@ let checkBoxes = document.getElementsByClassName("chk");
 const unCheck = (i) => {
 
     if ($("#cB" + i) && $("#checkbx").is(':checked')) {
-        $("#checkbx").prop('checked',false);
+        $("#checkbx").prop('checked', false);
     }
     showCurrSelec();
     $('#selectedColorModify').css('visibility', 'visible');
@@ -20,22 +20,16 @@ const unCheck = (i) => {
 }
 const checkAll = () => {
     checkBoxes = document.getElementsByClassName("chk");
-    if ($('#checkbx').is(':checked')) {
-        for (let item in checkBoxes) {
-            checkBoxes[item].checked = true;
-        }
-    } else {
-        for (let item in checkBoxes) {
-            checkBoxes[item].checked = false;
-        }
+    for (let item in checkBoxes) {
+        checkBoxes[item].checked = $('#checkbx').is(':checked') ? true : false;
     }
     showCurrSelec();
 }
 
-const showCurrSelec = () =>{
+const showCurrSelec = () => {
     let yt = 0;
     for (let item in checkBoxes) {
-        if (checkBoxes[item].checked == true && typeof(checkBoxes[item]) == 'object') {
+        if (checkBoxes[item].checked == true && typeof (checkBoxes[item]) == 'object') {
             yt++;
         }
     }
@@ -43,15 +37,13 @@ const showCurrSelec = () =>{
 }
 const addElement = (f, l, c, s) => {
     i++;
-    let fNames = $(".innamef");
-    let lNames = $(".innamel");
+    const fNames = $(".innamef");
+    const lNames = $(".innamel");
     if (fNames.length > 0) {
         for (let z = 0; z < fNames.length; z++) {
-            if (f == fNames[z].innerHTML) {
-                if (l == lNames[z].innerHTML) {
-                    alert('That username and password combination has already been taken');
-                    return;
-                }
+            if (f == fNames[z].innerHTML && l == lNames[z].innerHTML) {
+                alert('That username and password combination has already been taken');
+                return;
             }
         }
     }
@@ -104,7 +96,7 @@ const addElement = (f, l, c, s) => {
 
     fNameTag.style.fontSize = s;
     lNameTag.style.fontSize = s;
-    
+
     $(divList2).hide().appendTo('#list').fadeIn(1000);
 
     document.getElementById("cB" + i).addEventListener("click", unCheck.bind(null, i));
@@ -138,11 +130,10 @@ const editPush = (j) => {
     let fButtons = $(".fNameButton");
     let lButtons = $(".lNameButton");
     for (item in fButtons) {
-        if (item != "length" && item != "item" && item != "namedItem") {
-            if (item < 10) {
-                fButtons[item].style.visibility = "visible";
-                lButtons[item].style.visibility = "visible";
-            }
+        /* turn into one and condition */
+        if (item != "length" && item != "item" && item != "namedItem" && item < 10) {
+            fButtons[item].style.visibility = "visible";
+            lButtons[item].style.visibility = "visible";
         }
     }
     $("#checkdel").css('visibility', 'hidden');
@@ -163,7 +154,7 @@ const add = () => {
     lName = $("#lname").val();
     selectColor = $('#selectedColor').val().toString();
     selectSize = $('#textSize option:selected').text();
-    if ( !(/^#[0-9A-F]{6}$/i.test(selectColor)) || fName.length == 0 || lName.length ==0) {
+    if (!(/^#[0-9A-F]{6}$/i.test(selectColor)) || fName.length == 0 || lName.length == 0) {
         alert('please enter valid data');
     } else {
         addElement(fName, lName, selectColor, selectSize);
